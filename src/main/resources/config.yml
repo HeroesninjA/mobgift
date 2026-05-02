@@ -1,3 +1,10 @@
+config-version: 2
+
+settings:
+  # Enables detailed console logs for drop checks and chance rolls.
+  # Keep this false on production servers unless you are troubleshooting.
+  debug: false
+
 drops:
   # false = keeps vanilla drops and adds the drops below as bonuses.
   # true = removes vanilla drops and only keeps the drops configured here.
@@ -12,9 +19,26 @@ drops:
   #
   # Fields:
   # material: Bukkit/Paper item name, for example ROTTEN_FLESH, BONE, STRING.
-  # amount: how many items are added when the drop succeeds.
+  # amount: fixed number or min/max range.
   # chance: chance between 0.0 and 1.0.
   # mobs: list of mobs this drop applies to.
+  # worlds: optional world filter. Defaults to ALL if missing.
+  # biomes: optional biome filter. Defaults to ALL if missing.
+  # permission: optional permission required for this drop.
+  # required-tools: optional list of tools/weapons the killer must hold.
+  # looting-bonus: optional bonus from the Looting enchantment.
+  # message: optional player message when the drop is awarded.
+  # display-name: optional custom item name.
+  # lore: optional custom item lore.
+  # custom-model-data: optional resource-pack model data value.
+  #
+  # Fixed amount:
+  # amount: 1
+  #
+  # Random amount:
+  # amount:
+  #   min: 1
+  #   max: 3
   #
   # Chance examples:
   # 0.05 = 5%
@@ -34,15 +58,41 @@ drops:
   #
   # Single-line format is also accepted:
   # mobs: ZOMBIE,SKELETON,CREEPER
+  #
+  # Optional permission filter:
+  # permission: mobgift.vip
+  #
+  # Optional tool filter:
+  # required-tools:
+  #   - IRON_SWORD
+  #   - DIAMOND_SWORD
+  #
+  # Optional biome filter:
+  # biomes:
+  #   - DESERT
+  #   - BADLANDS
+  #
+  # Optional custom item metadata:
+  # display-name: "&aMob Token"
+  # lore:
+  #   - "&7Dropped from {mob}"
+  # custom-model-data: 1001
   items:
     zombie_rotten_flesh:
       material: ROTTEN_FLESH
-      amount: 1
+      amount:
+        min: 1
+        max: 2
       chance: 0.35
       mobs:
         - ZOMBIE
         - HUSK
         - DROWNED
+      worlds:
+        - ALL
+      looting-bonus:
+        chance-per-level: 0.02
+        amount-per-level: 0
 
     skeleton_bone:
       material: BONE
@@ -55,12 +105,17 @@ drops:
 
     skeleton_arrow:
       material: ARROW
-      amount: 2
+      amount:
+        min: 1
+        max: 3
       chance: 0.20
       mobs:
         - SKELETON
         - STRAY
         - PILLAGER
+      looting-bonus:
+        chance-per-level: 0.02
+        amount-per-level: 1
 
     spider_string:
       material: STRING
@@ -76,6 +131,9 @@ drops:
       chance: 0.25
       mobs:
         - CREEPER
+      looting-bonus:
+        chance-per-level: 0.03
+        amount-per-level: 0
 
     slime_ball:
       material: SLIME_BALL
@@ -97,6 +155,9 @@ drops:
       chance: 0.06
       mobs:
         - ENDERMAN
+      looting-bonus:
+        chance-per-level: 0.01
+        amount-per-level: 0
 
     blaze_powder:
       material: BLAZE_POWDER
@@ -107,7 +168,9 @@ drops:
 
     witch_redstone:
       material: REDSTONE
-      amount: 1
+      amount:
+        min: 1
+        max: 2
       chance: 0.14
       mobs:
         - WITCH
@@ -125,6 +188,11 @@ drops:
       chance: 0.06
       mobs:
         - DROWNED
+      required-tools:
+        - STONE_SWORD
+        - IRON_SWORD
+        - DIAMOND_SWORD
+        - NETHERITE_SWORD
 
     guardian_prismarine:
       material: PRISMARINE_SHARD
@@ -155,3 +223,21 @@ drops:
       chance: 0.20
       mobs:
         - CHICKEN
+
+    common_stick:
+      material: STICK
+      amount: 1
+      chance: 0.03
+      mobs:
+        - ALL
+      worlds:
+        - ALL
+
+    desert_husk_sand:
+      material: SAND
+      amount: 1
+      chance: 0.08
+      mobs:
+        - HUSK
+      biomes:
+        - DESERT

@@ -28,7 +28,7 @@ target/
 
 1. Copy the JAR from `target/` into the server's `plugins/` folder.
 2. Start or restart the server.
-3. The config will be generated at `plugins/mobgift/config.yml`.
+3. The config will be generated at `plugins/MobGift/config.yml`.
 
 ## Quick Config
 
@@ -44,15 +44,25 @@ drops:
       chance: 0.25
       mobs:
         - CREEPER
+      looting-bonus:
+        chance-per-level: 0.03
+        amount-per-level: 0
 ```
 
 Fields:
 
 - `replace-default-drops`: `false` keeps vanilla drops, `true` removes them.
 - `material`: the item to drop.
-- `amount`: the item amount.
+- `amount`: fixed amount or a `min`/`max` range.
 - `chance`: drop chance between `0.0` and `1.0`.
 - `mobs`: the mobs this drop applies to, or `ALL` for every mob.
+- `worlds`: optional world filter.
+- `biomes`: optional biome filter.
+- `permission`: optional permission required from the killer.
+- `required-tools`: optional list of tools/weapons the killer must hold.
+- `looting-bonus`: optional Looting enchantment bonus.
+- `message`: optional message sent to the player when the drop is awarded.
+- `display-name`, `lore`, `custom-model-data`: optional custom item metadata.
 
 ## `chance` Examples
 
@@ -62,11 +72,28 @@ Fields:
 - `0.50` = 50%
 - `1.00` = 100%
 
+## Commands
+
+- `/mobgift help`: shows command help.
+- `/mobgift reload`: reloads the config.
+- `/mobgift list`: lists loaded drop IDs.
+- `/mobgift test <dropId> [mob] [world] [biome]`: tests a loaded drop.
+
+Permissions:
+
+- `mobgift.reload`
+- `mobgift.list`
+- `mobgift.test`
+- `mobgift.admin`
+
 ## Documentation
 
+- [Direct JAR Installation Guide](docs/JAR_INSTALLATION.md)
 - [Usage Documentation](docs/USAGE.md)
 - [API Documentation](docs/API.md)
 
 ## Notes
 
-Bukkit/Paper does not automatically overwrite an existing config. If you install a new version and want the updated default config, rename or delete `plugins/mobgift/config.yml`, then restart the server.
+Bukkit/Paper does not automatically overwrite an existing config. If you install a new version and want the updated default config, rename or delete `plugins/MobGift/config.yml`, then restart the server.
+
+If you are upgrading from an older build that used `plugins/mobgift/config.yml`, move that config to `plugins/MobGift/config.yml` before starting the server.

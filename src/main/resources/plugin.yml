@@ -1,6 +1,31 @@
-name: mobgift
+name: MobGift
 version: '${version}'
 
-main: com.me.mobgift.Mobgift
+main: com.me.mobgift.MobGift
 api-version: '1.21'
 load: POSTWORLD
+
+commands:
+  mobgift:
+    description: Manage MobGift.
+    usage: /mobgift <help|reload|list|test>
+    aliases:
+      - mgift
+
+permissions:
+  mobgift.admin:
+    description: Grants access to all MobGift admin commands.
+    default: op
+    children:
+      mobgift.reload: true
+      mobgift.list: true
+      mobgift.test: true
+  mobgift.reload:
+    description: Allows reloading the MobGift config.
+    default: op
+  mobgift.list:
+    description: Allows listing loaded MobGift drop IDs.
+    default: op
+  mobgift.test:
+    description: Allows testing MobGift drop filters.
+    default: op
