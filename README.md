@@ -1,38 +1,38 @@
 # MobGift
 
-MobGift is a Paper/Spigot plugin that adds custom drops when a player kills a mob.
+MobGift este un plugin Paper/Spigot care adauga drop-uri custom cand un player omoara un mob.
 
-The default configuration is designed for normal survival servers: it keeps vanilla drops and adds small, realistic bonuses without overly valuable items.
+Default-ul este gandit pentru survival normal: pastreaza drop-urile vanilla si adauga bonusuri mici, realiste, fara iteme exagerat de valoroase.
 
-## Requirements
+## Cerinte
 
 - Java 21
 - Maven
-- Paper/Spigot compatible with API `1.21`
+- Paper/Spigot compatibil cu API `1.21`
 
 ## Build
 
-Build the plugin with:
+Compileaza pluginul cu:
 
 ```bash
 mvn package
 ```
 
-The final JAR is generated in:
+JAR-ul final se genereaza in:
 
 ```text
 target/
 ```
 
-## Installation
+## Instalare
 
-1. Copy the JAR from `target/` into the server's `plugins/` folder.
-2. Start or restart the server.
-3. The config will be generated at `plugins/MobGift/config.yml`.
+1. Copiaza JAR-ul din `target/` in folderul `plugins/` al serverului.
+2. Porneste sau reporneste serverul.
+3. Configul va fi generat in `plugins/mobgift/config.yml`.
 
-## Quick Config
+## Config rapid
 
-Example custom drop:
+Exemplu de drop custom:
 
 ```yaml
 drops:
@@ -44,27 +44,17 @@ drops:
       chance: 0.25
       mobs:
         - CREEPER
-      looting-bonus:
-        chance-per-level: 0.03
-        amount-per-level: 0
 ```
 
-Fields:
+Campuri:
 
-- `replace-default-drops`: `false` keeps vanilla drops, `true` removes them.
-- `material`: the item to drop.
-- `amount`: fixed amount or a `min`/`max` range.
-- `chance`: drop chance between `0.0` and `1.0`.
-- `mobs`: the mobs this drop applies to, or `ALL` for every mob.
-- `worlds`: optional world filter.
-- `biomes`: optional biome filter.
-- `permission`: optional permission required from the killer.
-- `required-tools`: optional list of tools/weapons the killer must hold.
-- `looting-bonus`: optional Looting enchantment bonus.
-- `message`: optional message sent to the player when the drop is awarded.
-- `display-name`, `lore`, `custom-model-data`: optional custom item metadata.
+- `replace-default-drops`: `false` pastreaza drop-urile vanilla, `true` le sterge.
+- `material`: itemul care pica.
+- `amount`: cantitatea.
+- `chance`: sansa intre `0.0` si `1.0`.
+- `mobs`: mobii la care se aplica drop-ul sau `ALL` pentru toti.
 
-## `chance` Examples
+## Exemple `chance`
 
 - `0.05` = 5%
 - `0.10` = 10%
@@ -72,28 +62,11 @@ Fields:
 - `0.50` = 50%
 - `1.00` = 100%
 
-## Commands
+## Documentatie
 
-- `/mobgift help`: shows command help.
-- `/mobgift reload`: reloads the config.
-- `/mobgift list`: lists loaded drop IDs.
-- `/mobgift test <dropId> [mob] [world] [biome]`: tests a loaded drop.
+- [Documentatie de utilizare](docs/UTILIZARE.md)
+- [Documentatie API](docs/API.md)
 
-Permissions:
+## Note
 
-- `mobgift.reload`
-- `mobgift.list`
-- `mobgift.test`
-- `mobgift.admin`
-
-## Documentation
-
-- [Direct JAR Installation Guide](docs/JAR_INSTALLATION.md)
-- [Usage Documentation](docs/USAGE.md)
-- [API Documentation](docs/API.md)
-
-## Notes
-
-Bukkit/Paper does not automatically overwrite an existing config. If you install a new version and want the updated default config, rename or delete `plugins/MobGift/config.yml`, then restart the server.
-
-If you are upgrading from an older build that used `plugins/mobgift/config.yml`, move that config to `plugins/MobGift/config.yml` before starting the server.
+Bukkit/Paper nu suprascrie automat configul existent. Daca instalezi o versiune noua si vrei configul default actualizat, redenumeste sau sterge `plugins/mobgift/config.yml`, apoi reporneste serverul.
