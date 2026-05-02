@@ -1,38 +1,38 @@
 # MobGift
 
-MobGift este un plugin Paper/Spigot care adauga drop-uri custom cand un player omoara un mob.
+MobGift is a Paper/Spigot plugin that adds custom drops when a player kills a mob.
 
-Default-ul este gandit pentru survival normal: pastreaza drop-urile vanilla si adauga bonusuri mici, realiste, fara iteme exagerat de valoroase.
+The default configuration is designed for normal survival servers: it keeps vanilla drops and adds small, realistic bonuses without overly valuable items.
 
-## Cerinte
+## Requirements
 
 - Java 21
 - Maven
-- Paper/Spigot compatibil cu API `1.21`
+- Paper/Spigot compatible with API `1.21`
 
 ## Build
 
-Compileaza pluginul cu:
+Build the plugin with:
 
 ```bash
 mvn package
 ```
 
-JAR-ul final se genereaza in:
+The final JAR is generated in:
 
 ```text
 target/
 ```
 
-## Instalare
+## Installation
 
-1. Copiaza JAR-ul din `target/` in folderul `plugins/` al serverului.
-2. Porneste sau reporneste serverul.
-3. Configul va fi generat in `plugins/mobgift/config.yml`.
+1. Copy the JAR from `target/` into the server's `plugins/` folder.
+2. Start or restart the server.
+3. The config will be generated at `plugins/mobgift/config.yml`.
 
-## Config rapid
+## Quick Config
 
-Exemplu de drop custom:
+Example custom drop:
 
 ```yaml
 drops:
@@ -46,15 +46,15 @@ drops:
         - CREEPER
 ```
 
-Campuri:
+Fields:
 
-- `replace-default-drops`: `false` pastreaza drop-urile vanilla, `true` le sterge.
-- `material`: itemul care pica.
-- `amount`: cantitatea.
-- `chance`: sansa intre `0.0` si `1.0`.
-- `mobs`: mobii la care se aplica drop-ul sau `ALL` pentru toti.
+- `replace-default-drops`: `false` keeps vanilla drops, `true` removes them.
+- `material`: the item to drop.
+- `amount`: the item amount.
+- `chance`: drop chance between `0.0` and `1.0`.
+- `mobs`: the mobs this drop applies to, or `ALL` for every mob.
 
-## Exemple `chance`
+## `chance` Examples
 
 - `0.05` = 5%
 - `0.10` = 10%
@@ -62,11 +62,11 @@ Campuri:
 - `0.50` = 50%
 - `1.00` = 100%
 
-## Documentatie
+## Documentation
 
-- [Documentatie de utilizare](docs/UTILIZARE.md)
-- [Documentatie API](docs/API.md)
+- [Usage Documentation](docs/USAGE.md)
+- [API Documentation](docs/API.md)
 
-## Note
+## Notes
 
-Bukkit/Paper nu suprascrie automat configul existent. Daca instalezi o versiune noua si vrei configul default actualizat, redenumeste sau sterge `plugins/mobgift/config.yml`, apoi reporneste serverul.
+Bukkit/Paper does not automatically overwrite an existing config. If you install a new version and want the updated default config, rename or delete `plugins/mobgift/config.yml`, then restart the server.

@@ -1,38 +1,38 @@
 drops:
-  # false = pastreaza drop-urile vanilla si adauga drop-urile de mai jos ca bonus.
-  # true = sterge drop-urile vanilla si lasa doar drop-urile configurate aici.
+  # false = keeps vanilla drops and adds the drops below as bonuses.
+  # true = removes vanilla drops and only keeps the drops configured here.
   #
-  # Default-ul este false ca sa nu strice economia vanilla a serverului.
+  # The default is false to avoid disrupting the server's vanilla economy.
   replace-default-drops: false
 
-  # Lista de drop-uri custom.
+  # Custom drop list.
   #
-  # Fiecare cheie de sub "items" este un ID intern ales de tine.
-  # Poti adauga, sterge sau redenumi drop-uri fara sa modifici codul.
+  # Each key under "items" is an internal ID chosen by you.
+  # You can add, remove, or rename drops without changing the code.
   #
-  # Campuri:
-  # material: item Bukkit/Paper, de exemplu ROTTEN_FLESH, BONE, STRING.
-  # amount: cate iteme se adauga cand drop-ul reuseste.
-  # chance: sansa intre 0.0 si 1.0.
-  # mobs: lista mob-urilor la care se aplica drop-ul.
+  # Fields:
+  # material: Bukkit/Paper item name, for example ROTTEN_FLESH, BONE, STRING.
+  # amount: how many items are added when the drop succeeds.
+  # chance: chance between 0.0 and 1.0.
+  # mobs: list of mobs this drop applies to.
   #
-  # Exemple chance:
+  # Chance examples:
   # 0.05 = 5%
   # 0.10 = 10%
   # 0.25 = 25%
   # 0.50 = 50%
   # 1.00 = 100%
   #
-  # Pentru orice mob:
+  # For every mob:
   # mobs:
   #   - ALL
   #
-  # Pentru mobi specifici:
+  # For specific mobs:
   # mobs:
   #   - ZOMBIE
   #   - SKELETON
   #
-  # Format acceptat si pe o singura linie:
+  # Single-line format is also accepted:
   # mobs: ZOMBIE,SKELETON,CREEPER
   items:
     zombie_rotten_flesh:

@@ -1,14 +1,14 @@
-# MobGift - Documentatie API
+# MobGift - API Documentation
 
-Aceasta documentatie descrie contractul tehnic al pluginului MobGift pentru dezvoltatori si integratori.
+This document describes the technical contract of the MobGift plugin for developers and integrators.
 
-In versiunea curenta, MobGift nu expune un serviciu public prin `ServicesManager` si nu are o clasa API separata stabila. Contractul disponibil este format din:
+In the current version, MobGift does not expose a public service through `ServicesManager` and does not have a separate stable API class. The available contract is made of:
 
-- schema `config.yml`;
-- comportamentul listenerului `MobKillListener`;
-- compatibilitatea cu vechiul format de config.
+- the `config.yml` schema;
+- the behavior of `MobKillListener`;
+- compatibility with the legacy config format.
 
-## Date plugin
+## Plugin Data
 
 `plugin.yml`:
 
@@ -35,22 +35,22 @@ Runtime:
 
 ## Lifecycle
 
-Clasa principala:
+Main class:
 
 ```kotlin
 class Mobgift : JavaPlugin()
 ```
 
-La `onEnable()` pluginul:
+During `onEnable()`, the plugin:
 
-1. ruleaza `saveDefaultConfig()`;
-2. inregistreaza `MobKillListener`.
+1. runs `saveDefaultConfig()`;
+2. registers `MobKillListener`.
 
-Nu exista comenzi, permisiuni sau task-uri programate in versiunea curenta.
+There are no commands, permissions, or scheduled tasks in the current version.
 
 ## Listener
 
-Clasa:
+Class:
 
 ```kotlin
 com.me.mobgift.MobKillListener
@@ -62,17 +62,17 @@ Event:
 org.bukkit.event.entity.EntityDeathEvent
 ```
 
-Flux:
+Flow:
 
-1. Daca `event.entity.killer == null`, pluginul nu face nimic.
-2. Daca `event.entityType == EntityType.PLAYER`, pluginul nu face nimic.
-3. Daca `drops.replace-default-drops` este `true`, apeleaza `event.drops.clear()`.
-4. Daca exista `drops.items` si are cel putin o cheie, citeste toate drop-urile din acea sectiune.
-5. Daca `drops.items` lipseste sau este gol, foloseste fallback-ul legacy.
+1. If `event.entity.killer == null`, the plugin does nothing.
+2. If `event.entityType == EntityType.PLAYER`, the plugin does nothing.
+3. If `drops.replace-default-drops` is `true`, it calls `event.drops.clear()`.
+4. If `drops.items` exists and has at least one key, it reads all drops from that section.
+5. If `drops.items` is missing or empty, it uses the legacy fallback.
 
-## Schema noua
+## New Schema
 
-Schema recomandata:
+Recommended schema:
 
 ```yaml
 drops:
@@ -85,7 +85,7 @@ drops:
       mobs: string | list<string>
 ```
 
-Exemplu:
+Example:
 
 ```yaml
 drops:
@@ -99,42 +99,42 @@ drops:
         - CREEPER
 ```
 
-`<drop-id>` este o cheie interna din YAML. Nu este folosita in logica, in afara de construirea path-ului configului.
+`<drop-id>` is an internal YAML key. It is not used by the logic except when building the config path.
 
-## Campuri
+## Fields
 
 ### `drops.replace-default-drops`
 
-Tip: `boolean`
+Type: `boolean`
 
-Default in cod: `true`
+Code default: `true`
 
-Default in configul actual: `false`
+Current config default: `false`
 
-Efect:
+Effect:
 
-- `true`: curata drop-urile existente in `EntityDeathEvent`.
-- `false`: lasa drop-urile existente si adauga drop-uri custom.
+- `true`: clears the existing drops in `EntityDeathEvent`.
+- `false`: keeps existing drops and adds custom drops.
 
 ### `<drop>.material`
 
-Tip: `string`
+Type: `string`
 
-Rezolvare:
+Resolution:
 
 ```kotlin
 Material.matchMaterial(configuredMaterial)
 ```
 
-Pentru drop-urile din `drops.items`, daca materialul lipseste sau este invalid, drop-ul este ignorat.
+For drops under `drops.items`, if the material is missing or invalid, the drop is ignored.
 
 ### `<drop>.amount`
 
-Tip: `integer`
+Type: `integer`
 
-Default in cod: `1`
+Code default: `1`
 
-Normalizare:
+Normalization:
 
 ```kotlin
 coerceAtLeast(1)
@@ -142,17 +142,17 @@ coerceAtLeast(1)
 
 ### `<drop>.chance`
 
-Tip: `double`
+Type: `double`
 
-Default in cod pentru `drops.items`: `0.0`
+Code default for `drops.items`: `0.0`
 
-Normalizare:
+Normalization:
 
 ```kotlin
 coerceIn(0.0, 1.0)
 ```
 
-Drop-ul este adaugat doar daca:
+The drop is added only if:
 
 ```kotlin
 Math.random() <= chance
@@ -160,28 +160,28 @@ Math.random() <= chance
 
 ### `<drop>.mobs`
 
-Tip: `string | list<string>`
+Type: `string | list<string>`
 
-Pluginul cauta intai:
+The plugin first looks for:
 
 ```text
 <drop-path>.mobs
 ```
 
-Daca nu exista, cauta forma singulara:
+If it does not exist, it also checks the singular form:
 
 ```text
 <drop-path>.mob
 ```
 
-Daca lipsesc ambele, fallback-ul este:
+If both are missing, the fallback is:
 
 ```yaml
 mobs:
   - ALL
 ```
 
-Formate acceptate:
+Accepted formats:
 
 ```yaml
 mobs:
@@ -193,18 +193,18 @@ mobs:
 mobs: ZOMBIE,SKELETON,CREEPER
 ```
 
-Normalizare:
+Normalization:
 
 - `trim()`
-- `-` devine `_`
-- spatiu devine `_`
-- uppercase cu `Locale.ROOT`
+- `-` becomes `_`
+- space becomes `_`
+- uppercase with `Locale.ROOT`
 
-Un drop este permis daca lista contine `ALL` sau daca un nume normalizat este egal cu `event.entityType`.
+A drop is allowed if the list contains `ALL` or if a normalized name equals `event.entityType`.
 
-## Compatibilitate legacy
+## Legacy Compatibility
 
-Daca `drops.items` lipseste sau nu contine chei, pluginul foloseste formatul vechi:
+If `drops.items` is missing or contains no keys, the plugin uses the old format:
 
 ```yaml
 drops:
@@ -228,7 +228,7 @@ drops:
         - ALL
 ```
 
-Path-uri legacy:
+Legacy paths:
 
 ```text
 drops.guaranteed
@@ -236,7 +236,7 @@ drops.bonus.gold
 drops.bonus.iron
 ```
 
-Fallback-uri legacy:
+Legacy fallbacks:
 
 - `drops.guaranteed.material`: `DIAMOND`
 - `drops.guaranteed.amount`: `5`
@@ -245,34 +245,34 @@ Fallback-uri legacy:
 - `drops.bonus.iron.material`: `IRON_INGOT`
 - bonus `chance`: `0.0`
 
-## Integrare din alt plugin
+## Integration From Another Plugin
 
-MobGift nu expune inca un serviciu public. Alt plugin poate verifica doar daca este activ:
+MobGift does not expose a public service yet. Another plugin can only check whether it is enabled:
 
 ```kotlin
 val mobGift = server.pluginManager.getPlugin("mobgift")
 if (mobGift != null && mobGift.isEnabled) {
-    // MobGift este activ.
+    // MobGift is active.
 }
 ```
 
-Citirea configului direct este posibila, dar nu este recomandata ca API stabil:
+Reading the config directly is possible, but it is not recommended as a stable API:
 
 ```kotlin
 val mobGift = server.pluginManager.getPlugin("mobgift") as? JavaPlugin
 val customDrops = mobGift?.config?.getConfigurationSection("drops.items")
 ```
 
-## Extindere recomandata
+## Recommended Extension
 
-Pentru un API public stabil, separa logica in servicii:
+For a stable public API, split the logic into services:
 
-- `DropDefinition`: model pentru material, amount, chance si mobs.
-- `DropConfigLoader`: incarca `drops.items`.
-- `MobGiftApi`: interfata publica pentru alte pluginuri.
-- `MobGiftService`: implementare interna.
+- `DropDefinition`: model for material, amount, chance, and mobs.
+- `DropConfigLoader`: loads `drops.items`.
+- `MobGiftApi`: public interface for other plugins.
+- `MobGiftService`: internal implementation.
 
-Exemplu de interfata:
+Example interface:
 
 ```kotlin
 interface MobGiftApi {
@@ -282,7 +282,7 @@ interface MobGiftApi {
 }
 ```
 
-Inregistrare posibila:
+Possible registration:
 
 ```kotlin
 server.servicesManager.register(
