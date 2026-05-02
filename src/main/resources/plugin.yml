@@ -1,0 +1,6 @@
+name: mobgift
+version: '${version}'
+
+main: com.me.mobgift.Mobgift
+api-version: '1.21'
+load: POSTWORLD

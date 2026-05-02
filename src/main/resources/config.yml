@@ -1,0 +1,157 @@
+drops:
+  # false = pastreaza drop-urile vanilla si adauga drop-urile de mai jos ca bonus.
+  # true = sterge drop-urile vanilla si lasa doar drop-urile configurate aici.
+  #
+  # Default-ul este false ca sa nu strice economia vanilla a serverului.
+  replace-default-drops: false
+
+  # Lista de drop-uri custom.
+  #
+  # Fiecare cheie de sub "items" este un ID intern ales de tine.
+  # Poti adauga, sterge sau redenumi drop-uri fara sa modifici codul.
+  #
+  # Campuri:
+  # material: item Bukkit/Paper, de exemplu ROTTEN_FLESH, BONE, STRING.
+  # amount: cate iteme se adauga cand drop-ul reuseste.
+  # chance: sansa intre 0.0 si 1.0.
+  # mobs: lista mob-urilor la care se aplica drop-ul.
+  #
+  # Exemple chance:
+  # 0.05 = 5%
+  # 0.10 = 10%
+  # 0.25 = 25%
+  # 0.50 = 50%
+  # 1.00 = 100%
+  #
+  # Pentru orice mob:
+  # mobs:
+  #   - ALL
+  #
+  # Pentru mobi specifici:
+  # mobs:
+  #   - ZOMBIE
+  #   - SKELETON
+  #
+  # Format acceptat si pe o singura linie:
+  # mobs: ZOMBIE,SKELETON,CREEPER
+  items:
+    zombie_rotten_flesh:
+      material: ROTTEN_FLESH
+      amount: 1
+      chance: 0.35
+      mobs:
+        - ZOMBIE
+        - HUSK
+        - DROWNED
+
+    skeleton_bone:
+      material: BONE
+      amount: 1
+      chance: 0.30
+      mobs:
+        - SKELETON
+        - STRAY
+        - WITHER_SKELETON
+
+    skeleton_arrow:
+      material: ARROW
+      amount: 2
+      chance: 0.20
+      mobs:
+        - SKELETON
+        - STRAY
+        - PILLAGER
+
+    spider_string:
+      material: STRING
+      amount: 1
+      chance: 0.30
+      mobs:
+        - SPIDER
+        - CAVE_SPIDER
+
+    creeper_gunpowder:
+      material: GUNPOWDER
+      amount: 1
+      chance: 0.25
+      mobs:
+        - CREEPER
+
+    slime_ball:
+      material: SLIME_BALL
+      amount: 1
+      chance: 0.25
+      mobs:
+        - SLIME
+
+    magma_cream:
+      material: MAGMA_CREAM
+      amount: 1
+      chance: 0.15
+      mobs:
+        - MAGMA_CUBE
+
+    enderman_pearl:
+      material: ENDER_PEARL
+      amount: 1
+      chance: 0.06
+      mobs:
+        - ENDERMAN
+
+    blaze_powder:
+      material: BLAZE_POWDER
+      amount: 1
+      chance: 0.12
+      mobs:
+        - BLAZE
+
+    witch_redstone:
+      material: REDSTONE
+      amount: 1
+      chance: 0.14
+      mobs:
+        - WITCH
+
+    witch_glowstone_dust:
+      material: GLOWSTONE_DUST
+      amount: 1
+      chance: 0.10
+      mobs:
+        - WITCH
+
+    drowned_copper:
+      material: COPPER_INGOT
+      amount: 1
+      chance: 0.06
+      mobs:
+        - DROWNED
+
+    guardian_prismarine:
+      material: PRISMARINE_SHARD
+      amount: 1
+      chance: 0.18
+      mobs:
+        - GUARDIAN
+        - ELDER_GUARDIAN
+
+    phantom_membrane:
+      material: PHANTOM_MEMBRANE
+      amount: 1
+      chance: 0.10
+      mobs:
+        - PHANTOM
+
+    cow_leather:
+      material: LEATHER
+      amount: 1
+      chance: 0.18
+      mobs:
+        - COW
+        - MOOSHROOM
+
+    chicken_feather:
+      material: FEATHER
+      amount: 1
+      chance: 0.20
+      mobs:
+        - CHICKEN
