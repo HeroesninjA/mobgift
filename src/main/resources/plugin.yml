@@ -1,6 +1,71 @@
-name: mobgift
+name: MobGift
 version: '${version}'
 
-main: com.me.mobgift.Mobgift
+main: com.me.mobgift.MobGift
 api-version: '1.21'
 load: POSTWORLD
+
+commands:
+  mobgift:
+    description: Manage MobGift.
+    usage: /mobgift <help|reload|list|info|give|cooldown|stats|test|preview|validate|gui>
+    aliases:
+      - mgift
+
+permissions:
+  mobgift.admin:
+    description: Grants access to all MobGift admin commands.
+    default: op
+    children:
+      mobgift.reload: true
+      mobgift.list: true
+      mobgift.info: true
+      mobgift.give: true
+      mobgift.cooldown: true
+      mobgift.stats: true
+      mobgift.stats.export: true
+      mobgift.stats.reset: true
+      mobgift.test: true
+      mobgift.preview: true
+      mobgift.validate: true
+      mobgift.gui: true
+      mobgift.gui.edit: true
+  mobgift.reload:
+    description: Allows reloading the MobGift config.
+    default: op
+  mobgift.list:
+    description: Allows listing loaded MobGift drop IDs.
+    default: op
+  mobgift.info:
+    description: Allows viewing detailed MobGift drop information.
+    default: op
+  mobgift.give:
+    description: Allows forcing MobGift rewards for online players.
+    default: op
+  mobgift.cooldown:
+    description: Allows resetting MobGift drop cooldowns.
+    default: op
+  mobgift.stats:
+    description: Allows viewing MobGift reward statistics.
+    default: op
+  mobgift.stats.export:
+    description: Allows exporting MobGift reward statistics.
+    default: op
+  mobgift.stats.reset:
+    description: Allows resetting MobGift reward statistics.
+    default: op
+  mobgift.test:
+    description: Allows testing MobGift drop filters.
+    default: op
+  mobgift.preview:
+    description: Allows previewing matching MobGift drops.
+    default: op
+  mobgift.validate:
+    description: Allows validating the MobGift config.
+    default: op
+  mobgift.gui:
+    description: Allows opening the MobGift admin GUI.
+    default: op
+  mobgift.gui.edit:
+    description: Allows editing MobGift drops from the admin GUI.
+    default: op

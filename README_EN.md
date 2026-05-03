@@ -32,20 +32,32 @@ By default, MobGift keeps normal Minecraft drops and only adds small bonus rewar
 - Requires Java `21`
 - Configurable mob drops
 - Adjustable drop chances
+- Per-drop enable/disable toggle
+- Per-player drop cooldowns
+- Optional persistent cooldowns across clean restarts
+- Persistent reward statistics in `stats.yml`
+- Optional per-reward CSV audit log in `rewards.csv`
+- Public `MobGiftApi` service and cancellable reward award event
 - Option to keep or replace vanilla drops
 - Supports specific mobs or all mobs
+- Optional XP, command, message, sound, and particle rewards
+- Optional custom item metadata, enchantments, item flags, and unbreakable rewards
+- Preview and validation admin commands
+- Drop info, forced reward give, and cooldown reset admin commands
+- Inventory-based admin GUI with settings, warnings, create, duplicate, delete, quick edits, and chat input for rewards, filters, permissions, and metadata
+- Optional spawner-mob filtering
 - Kotlin runtime bundled inside the plugin JAR
 
 ---
 
 ## Simple Installation
 
-To install MobGift, copy the plugin file into your server’s `plugins/` folder.
+To install MobGift, copy the plugin file into your server's `plugins/` folder.
 
 Example file:
 
 ```text
-mobgift-1.0-SNAPSHOT.jar
+MobGift-1.0-SNAPSHOT.jar
 ```
 
 Then restart your Minecraft server.
@@ -53,7 +65,7 @@ Then restart your Minecraft server.
 On first launch, MobGift automatically creates its configuration file:
 
 ```text
-plugins/mobgift/config.yml
+plugins/MobGift/config.yml
 ```
 
 ---
@@ -92,6 +104,17 @@ drops:
 ```
 
 This means that Creepers have a 25% chance to drop 1 extra Gunpowder.
+
+Custom item metadata can also be configured:
+
+```yaml
+display-name: "&aMob Token"
+enchantments:
+  SHARPNESS: 2
+item-flags:
+  - HIDE_ENCHANTS
+unbreakable: true
+```
 
 ---
 
@@ -167,7 +190,7 @@ To update the plugin:
 2. Back up your config file:
 
 ```text
-plugins/mobgift/config.yml
+plugins/MobGift/config.yml
 ```
 
 3. Replace the old MobGift `.jar` with the new version.
@@ -179,15 +202,40 @@ Your existing configuration will not be overwritten automatically.
 
 ## Commands And Permissions
 
-MobGift currently does not add commands or permissions.
-
-All configuration is handled through:
+MobGift provides these admin commands:
 
 ```text
-plugins/mobgift/config.yml
+/mobgift help
+/mobgift reload
+/mobgift list
+/mobgift info <dropId>
+/mobgift give <player> <dropId> [amount]
+/mobgift cooldown reset <player> [dropId|all]
+/mobgift stats [top|drop <dropId>|player <player>]
+/mobgift stats export
+/mobgift stats reset <all|drop <dropId>|player <player>>
+/mobgift test <dropId> [mob] [world] [biome]
+/mobgift preview <mob> [world] [biome]
+/mobgift validate
+/mobgift gui
 ```
 
-This keeps the plugin simple and easy to manage.
+Permissions:
+
+- `mobgift.reload`
+- `mobgift.list`
+- `mobgift.info`
+- `mobgift.give`
+- `mobgift.cooldown`
+- `mobgift.stats`
+- `mobgift.stats.export`
+- `mobgift.stats.reset`
+- `mobgift.test`
+- `mobgift.preview`
+- `mobgift.validate`
+- `mobgift.gui`
+- `mobgift.gui.edit`
+- `mobgift.admin`
 
 ---
 
@@ -207,6 +255,15 @@ If drops do not appear, check that:
 - the mob name is valid;
 - the material name is valid;
 - the server was restarted after editing the config.
+
+---
+
+## Documentation
+
+- [Usage documentation](docs/USAGE.md)
+- [API documentation](docs/API.md)
+- [Changelog](CHANGELOG.md)
+- [Release checklist](docs/RELEASE_CHECKLIST.md)
 
 ---
 
