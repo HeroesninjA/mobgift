@@ -77,6 +77,54 @@ This means:
 - The drop chance is `0.25`, which means 25%.
 - Vanilla drops are kept because `replace-default-drops` is `false`.
 
+Set `enabled: false` on any drop to disable it temporarily without deleting its config.
+
+Set `cooldown-seconds` to prevent the same player from receiving the same drop repeatedly:
+
+```yaml
+cooldown-seconds: 300
+```
+
+By default, cooldowns reset on restart. To keep active cooldowns across clean restarts, enable:
+
+```yaml
+settings:
+  persist-cooldowns: true
+```
+
+To keep a detailed CSV audit row for every awarded reward, enable:
+
+```yaml
+settings:
+  reward-log:
+    enabled: true
+    file: rewards.csv
+```
+
+The file is written to `plugins/MobGift/rewards.csv`.
+
+Optional rewards can also add XP, run console commands, send messages, play sounds, or spawn particles:
+
+```yaml
+xp:
+  min: 1
+  max: 3
+commands:
+  - "say {player} found {amount}x {material}"
+message: "&7You found &f{amount}x {material}&7."
+```
+
+Custom item metadata is supported too:
+
+```yaml
+display-name: "&aMob Token"
+enchantments:
+  SHARPNESS: 2
+item-flags:
+  - HIDE_ENCHANTS
+unbreakable: true
+```
+
 ## Replacing Or Keeping Vanilla Drops
 
 Recommended:
@@ -167,6 +215,20 @@ After editing `config.yml`, run:
 
 If the plugin reports config warnings, check the server console for details.
 
+Validation also catches unknown placeholders, permissions with spaces, and unusually long cooldowns.
+
+Reward statistics are available with:
+
+```text
+/mobgift stats
+/mobgift stats drop <dropId>
+/mobgift stats player <player>
+/mobgift stats export
+/mobgift stats reset all
+```
+
+MobGift saves aggregate reward stats to `plugins/MobGift/stats.yml`. Stats exports are written as `plugins/MobGift/stats-export-<timestamp>.csv`.
+
 ## Updating The Plugin
 
 1. Stop the server.
@@ -217,7 +279,16 @@ MobGift provides these commands:
 /mobgift help
 /mobgift reload
 /mobgift list
+/mobgift info <dropId>
+/mobgift give <player> <dropId> [amount]
+/mobgift cooldown reset <player> [dropId|all]
+/mobgift stats [top|drop <dropId>|player <player>]
+/mobgift stats export
+/mobgift stats reset <all|drop <dropId>|player <player>>
 /mobgift test <dropId> [mob] [world] [biome]
+/mobgift preview <mob> [world] [biome]
+/mobgift validate
+/mobgift gui
 ```
 
 Alias:
@@ -230,8 +301,24 @@ Permissions:
 
 - `mobgift.reload`: allows `/mobgift reload`.
 - `mobgift.list`: allows `/mobgift list`.
+- `mobgift.info`: allows `/mobgift info`.
+- `mobgift.give`: allows `/mobgift give`.
+- `mobgift.cooldown`: allows `/mobgift cooldown reset`.
+- `mobgift.stats`: allows `/mobgift stats`.
+- `mobgift.stats.export`: allows `/mobgift stats export`.
+- `mobgift.stats.reset`: allows `/mobgift stats reset`.
 - `mobgift.test`: allows `/mobgift test`.
+- `mobgift.preview`: allows `/mobgift preview`.
+- `mobgift.validate`: allows `/mobgift validate`.
+- `mobgift.gui`: allows `/mobgift gui`.
+- `mobgift.gui.edit`: allows editing drops from `/mobgift gui`.
 - `mobgift.admin`: grants all MobGift admin permissions.
+
+The GUI supports creating basic drops, duplicating existing drops, deleting drops with confirmation, top reward stats with CSV export, global settings toggles including cooldown persistence and reward logging, validation warnings, quick numeric/toggle edits, enabled toggles, and chat input for chance, amount, XP, cooldown, material, permission, mob/world/biome lists, messages, broadcasts, commands, required tools, item metadata, enchantments, item flags, Looting bonuses, sounds, and particles.
+
+Admin testing commands also include detailed drop info, forced reward give, and cooldown reset for online players.
+
+Developer integrations can use the public `MobGiftApi` service and the cancellable `MobGiftDropAwardEvent`.
 
 ## Troubleshooting
 

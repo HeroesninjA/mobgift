@@ -1,9 +1,25 @@
-config-version: 2
+config-version: 8
 
 settings:
   # Enables detailed console logs for drop checks and chance rolls.
   # Keep this false on production servers unless you are troubleshooting.
   debug: false
+
+  # Global default for mobs spawned from mob spawners.
+  # Set this to false if you want to reduce automatic farm rewards.
+  # Each drop can override this with allow-spawner-mobs.
+  allow-spawner-mobs: true
+
+  # Saves active cooldowns to plugins/MobGift/cooldowns.yml on clean shutdown and cooldown changes.
+  # Keep this false if cooldowns should reset when the server restarts.
+  persist-cooldowns: false
+
+  # Optional detailed audit log for awarded rewards.
+  # When enabled, MobGift appends CSV rows to plugins/MobGift/rewards.csv.
+  # Keep this false unless you need per-reward audit history.
+  reward-log:
+    enabled: false
+    file: rewards.csv
 
 drops:
   # false = keeps vanilla drops and adds the drops below as bonuses.
@@ -19,20 +35,32 @@ drops:
   #
   # Fields:
   # material: Bukkit/Paper item name, for example ROTTEN_FLESH, BONE, STRING.
+  # enabled: optional true/false toggle. Defaults to true.
   # amount: fixed number or min/max range.
   # chance: chance between 0.0 and 1.0.
+  # cooldown-seconds: optional per-player cooldown after this drop is awarded.
   # mobs: list of mobs this drop applies to.
   # worlds: optional world filter. Defaults to ALL if missing.
   # biomes: optional biome filter. Defaults to ALL if missing.
   # permission: optional permission required for this drop.
   # required-tools: optional list of tools/weapons the killer must hold.
+  # allow-spawner-mobs: optional override for mobs spawned from spawners.
   # looting-bonus: optional bonus from the Looting enchantment.
+  # xp: optional extra experience reward, fixed number or min/max range.
+  # commands: optional console commands run when the drop is awarded.
+  # broadcast: optional server-wide message when the drop is awarded.
+  # sound: optional sound played to the killer.
+  # particle: optional particle effect at the killed mob location.
   # message: optional player message when the drop is awarded.
   # display-name: optional custom item name.
   # lore: optional custom item lore.
   # custom-model-data: optional resource-pack model data value.
+  # enchantments: optional map or list of enchantments and levels.
+  # item-flags: optional list of Bukkit item flags such as HIDE_ENCHANTS.
+  # unbreakable: optional item metadata flag.
   #
   # Fixed amount:
+  # enabled: true
   # amount: 1
   #
   # Random amount:
@@ -46,6 +74,9 @@ drops:
   # 0.25 = 25%
   # 0.50 = 50%
   # 1.00 = 100%
+  #
+  # Optional cooldown:
+  # cooldown-seconds: 300
   #
   # For every mob:
   # mobs:
@@ -72,11 +103,38 @@ drops:
   #   - DESERT
   #   - BADLANDS
   #
+  # Optional anti-farm override:
+  # allow-spawner-mobs: false
+  #
+  # Optional XP reward:
+  # xp:
+  #   min: 1
+  #   max: 4
+  #
+  # Optional console commands:
+  # commands:
+  #   - "say {player} found {amount}x {material} from {mob}"
+  #
+  # Optional effects:
+  # broadcast: "&6{player} found a rare drop from {mob}!"
+  # sound:
+  #   name: ENTITY_PLAYER_LEVELUP
+  #   volume: 1.0
+  #   pitch: 1.2
+  # particle:
+  #   name: TOTEM_OF_UNDYING
+  #   count: 12
+  #
   # Optional custom item metadata:
   # display-name: "&aMob Token"
   # lore:
   #   - "&7Dropped from {mob}"
   # custom-model-data: 1001
+  # enchantments:
+  #   SHARPNESS: 2
+  # item-flags:
+  #   - HIDE_ENCHANTS
+  # unbreakable: true
   items:
     zombie_rotten_flesh:
       material: ROTTEN_FLESH
@@ -155,6 +213,15 @@ drops:
       chance: 0.06
       mobs:
         - ENDERMAN
+      allow-spawner-mobs: false
+      message: "&7You found a rare &5Ender Pearl&7."
+      sound:
+        name: ENTITY_PLAYER_LEVELUP
+        volume: 0.7
+        pitch: 1.4
+      particle:
+        name: PORTAL
+        count: 18
       looting-bonus:
         chance-per-level: 0.01
         amount-per-level: 0
@@ -163,6 +230,9 @@ drops:
       material: BLAZE_POWDER
       amount: 1
       chance: 0.12
+      xp:
+        min: 1
+        max: 3
       mobs:
         - BLAZE
 
