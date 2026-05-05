@@ -1,97 +1,141 @@
-# MobGift
+MobGift
+MobGift is a Paper/Spigot plugin that adds custom drops when a player kills a mob.
+The default setup is designed for normal survival gameplay: it keeps vanilla drops and adds small, realistic bonuses without overly valuable items.
+Requirements
 
-MobGift este un plugin Paper/Spigot care adauga drop-uri custom cand un player omoara un mob.
 
-Default-ul este gandit pentru survival normal: pastreaza drop-urile vanilla si adauga bonusuri mici, realiste, fara iteme exagerat de valoroase.
+Java 21
 
-## Cerinte
 
-- Java 21
-- Maven
-- Paper/Spigot compatibil cu API `1.21`
+Maven
 
-## Build
 
-Compileaza pluginul cu:
+Paper/Spigot compatible with API 1.21
 
-```bash
+
+Build
+Compile the plugin with:
 mvn package
-```
-
-JAR-ul final se genereaza in:
-
-```text
+The final JAR is generated in:
 target/
-```
+Installation
 
-## Instalare
 
-1. Copiaza JAR-ul din `target/` in folderul `plugins/` al serverului.
-2. Porneste sau reporneste serverul.
-3. Configul va fi generat in `plugins/MobGift/config.yml`.
+Copy the JAR from target/ into the server’s plugins/ folder.
 
-## Config rapid
 
-Exemplu de drop custom:
+Start or restart the server.
 
-```yaml
-drops:
-  replace-default-drops: false
-  items:
-    creeper_gunpowder:
-      material: GUNPOWDER
-      amount: 1
-      chance: 0.25
-      mobs:
-        - CREEPER
-```
 
-Campuri:
+The config will be generated in plugins/MobGift/config.yml.
 
-- `replace-default-drops`: `false` pastreaza drop-urile vanilla, `true` le sterge.
-- `enabled`: `false` dezactiveaza temporar un drop fara sa-l stergi.
-- `material`: itemul care pica.
-- `amount`: cantitatea.
-- `chance`: sansa intre `0.0` si `1.0`.
-- `cooldown-seconds`: cooldown per player dupa ce drop-ul este acordat.
-- `settings.persist-cooldowns`: salveaza cooldown-urile active in `cooldowns.yml`, ca sa ramana dupa restarturi curate.
-- `settings.reward-log.enabled`: scrie audit CSV detaliat in `rewards.csv` pentru fiecare reward acordat.
-- `mobs`: mobii la care se aplica drop-ul sau `ALL` pentru toti.
-- `xp`: experienta extra optionala.
-- `commands`: comenzi console optionale cand drop-ul este castigat.
-- `allow-spawner-mobs`: permite sau blocheaza drop-ul pentru mobi din spawner.
-- `display-name`, `lore`, `custom-model-data`, `enchantments`, `item-flags`, `unbreakable`: metadata optionala pentru itemele custom.
 
-## Comenzi utile
+Quick config
+Example custom drop:
+drops:  replace-default-drops: false  items:    creeper_gunpowder:      material: GUNPOWDER      amount: 1      chance: 0.25      mobs:        - CREEPER
+Fields:
 
-- `/mobgift preview <mob> [world] [biome]`: arata drop-urile care se potrivesc.
-- `/mobgift info <dropId>`: arata detalii despre un drop incarcat.
-- `/mobgift give <player> <dropId> [amount]`: acorda fortat reward-ul unui player online.
-- `/mobgift cooldown reset <player> [dropId|all]`: reseteaza cooldown-uri pentru un player online.
-- `/mobgift stats [top|drop <dropId>|player <player>|export|reset]`: arata, exporta sau reseteaza statistici persistente din `stats.yml`.
-- `/mobgift validate`: reincarca si afiseaza warning-urile de config in chat.
-- `/mobgift gui`: deschide GUI admin pentru drop-uri, stats, settings, creare, duplicare, stergere, warning-uri, toggle enabled, persistenta cooldown-uri, reward log, editari rapide si input prin chat pentru chance, amount, XP, cooldown, filtre, permisiuni si metadata.
 
-`/mobgift validate` verifica inclusiv placeholder-e necunoscute, permisiuni cu spatii si cooldown-uri foarte mari.
+replace-default-drops: false keeps vanilla drops, true removes them.
 
-Pentru integrari, pluginul expune `MobGiftApi` prin Bukkit `ServicesManager` si evenimentul cancellable `MobGiftDropAwardEvent`.
 
-## Exemple `chance`
+enabled: false temporarily disables a drop without deleting it.
 
-- `0.05` = 5%
-- `0.10` = 10%
-- `0.25` = 25%
-- `0.50` = 50%
-- `1.00` = 100%
 
-## Documentatie
+material: the item that drops.
 
-- [Documentatie de utilizare](docs/USAGE.md)
-- [Documentatie API](docs/API.md)
-- [Changelog](CHANGELOG.md)
-- [Checklist release](docs/RELEASE_CHECKLIST.md)
-- [English README](README_EN.md)
 
-## Note
+amount: the amount.
 
-Bukkit/Paper nu suprascrie automat configul existent. Daca instalezi o versiune noua si vrei configul default actualizat, redenumeste sau sterge `plugins/MobGift/config.yml`, apoi reporneste serverul.
+
+chance: the chance between 0.0 and 1.0.
+
+
+cooldown-seconds: cooldown per player after the drop is awarded.
+
+
+settings.persist-cooldowns: saves active cooldowns in cooldowns.yml, so they remain after clean restarts.
+
+
+settings.reward-log.enabled: writes a detailed CSV audit log to rewards.csv for every awarded reward.
+
+
+mobs: the mobs the drop applies to, or ALL for all mobs.
+
+
+xp: optional extra experience.
+
+
+commands: optional console commands when the drop is won.
+
+
+allow-spawner-mobs: allows or blocks the drop for mobs from spawners.
+
+
+display-name, lore, custom-model-data, enchantments, item-flags, unbreakable: optional metadata for custom items.
+
+
+Useful commands
+
+
+/mobgift preview <mob> [world] [biome]: shows the matching drops.
+
+
+/mobgift info <dropId>: shows details about a loaded drop.
+
+
+/mobgift give <player> <dropId> [amount]: forcibly gives the reward to an online player.
+
+
+/mobgift cooldown reset <player> [dropId|all]: resets cooldowns for an online player.
+
+
+/mobgift stats [top|drop <dropId>|player <player>|export|reset]: shows, exports, or resets persistent statistics from stats.yml.
+
+
+/mobgift validate: reloads and displays config warnings in chat.
+
+
+/mobgift gui: opens the admin GUI for drops, stats, settings, creation, duplication, deletion, warnings, enabled toggles, cooldown persistence, reward log, quick edits, and chat input for chance, amount, XP, cooldown, filters, permissions, and metadata.
+
+
+/mobgift validate also checks for unknown placeholders, permissions with spaces, and very large cooldowns.
+For integrations, the plugin exposes MobGiftApi through Bukkit ServicesManager and the cancellable MobGiftDropAwardEvent.
+chance examples
+
+
+0.05 = 5%
+
+
+0.10 = 10%
+
+
+0.25 = 25%
+
+
+0.50 = 50%
+
+
+1.00 = 100%
+
+
+Documentation
+
+
+Usage documentation
+
+
+API documentation
+
+
+Changelog
+
+
+Release checklist
+
+
+English README
+
+
+Notes
+Bukkit/Paper does not automatically overwrite the existing config. When installing a new version, if you want the updated default config, rename or delete plugins/MobGift/config.yml, then restart the server.
